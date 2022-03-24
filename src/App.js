@@ -9,11 +9,13 @@ import AddEdit from "./pages/AddEdit";
 import View from "./pages/View";
 
 import "./App.css";
+import Header from "./components/header/Header";
 
 function App() {
   return (
     <BrowserRouter>
       <div className="App">
+        <Header />
         <ToastContainer position="top-center" />
         <Routes>
           <Route exact path="/" element={<Home />} />
