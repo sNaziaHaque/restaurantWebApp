@@ -7,9 +7,9 @@ import "react-toastify/dist/ReactToastify.css";
 import Home from "./pages/Home";
 import AddEdit from "./pages/AddEdit";
 import View from "./pages/View";
+import Header from "./components/header/Header";
 
 import "./App.css";
-import Header from "./components/header/Header";
 
 function App() {
   return (
@@ -27,5 +27,4 @@ function App() {
     </BrowserRouter>
   );
 }
-
 export default App;

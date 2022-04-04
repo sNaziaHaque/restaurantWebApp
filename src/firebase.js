@@ -1,6 +1,7 @@
-import firebase from "firebase/app";
+import firebase from "firebase/compat/app";
+import "firebase/compat/database";
 
-const firebaseConfig = {
+var firebaseConfig = {
   apiKey: "AIzaSyBTYKKOs3d7ADsjsDVX9gn0EnJ7Nlq1i68",
   authDomain: "restaurant-app-f93f0.firebaseapp.com",
   projectId: "restaurant-app-f93f0",
@@ -9,8 +10,6 @@ const firebaseConfig = {
   appId: "1:773590295995:web:64916f41299744df79509e",
 };
 
-const firebaseApp = firebase.initializeApp(firebaseConfig);
+const fireDb = firebase.initializeApp(firebaseConfig);
 
-const db = firebaseApp.database().ref();
-
-export { db };
+export default fireDb.database().ref();
