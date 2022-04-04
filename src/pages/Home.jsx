@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import fireDb from "../firebase";
 
 import "./Home.css";
 
 function Home() {
   const [data, setData] = useState({});
+
   useEffect(() => {
     fireDb.child("restaurants").on("value", (snapshot) => {
       if (snapshot.val() !== null) {
@@ -20,6 +22,18 @@ function Home() {
       setData({});
     };
   }, []);
+
+  const onDelete = (id) => {
+    if (window.confirm("Are you sure you want to delete ?")) {
+      fireDb.child(`restaurants/${id}`).remove((err) => {
+        if (err) {
+          toast.error(err);
+        } else {
+          toast.success("Restaurant deleted successfully");
+        }
+      });
+    }
+  };
 
   return (
     <div className="restaurant-table">
@@ -47,7 +61,11 @@ function Home() {
                       Edit
                     </button>
                   </Link>
-                  <button type="button" className="btn btn-secondary">
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    onClick={() => onDelete(id)}
+                  >
                     Delete
                   </button>
                   <Link to={`/view/${id}`}>
