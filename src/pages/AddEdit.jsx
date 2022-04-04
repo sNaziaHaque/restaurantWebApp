@@ -16,6 +16,7 @@ function AddEdit() {
   const [state, setState] = useState(initialState);
   const [data, setData] = useState({});
 
+  // Destructuring
   const { name, address, rating } = state;
 
   const navigate = useNavigate();
