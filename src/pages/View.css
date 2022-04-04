@@ -1,0 +1,9 @@
+.restaurant-carousal {
+  display: flex;
+  height: 400px;
+  margin: 20px;
+}
+
+.info-text {
+  text-align: left;
+}
