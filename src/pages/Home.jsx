@@ -56,7 +56,7 @@ function Home() {
                 <td>{data[id].address}</td>
                 <td>{data[id].rating}</td>
                 <td>
-                  <Link to={`/update/${id}`}>
+                  <Link to={`/edit/${id}`}>
                     <button type="button" className="btn btn-secondary">
                       Edit
                     </button>

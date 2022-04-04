@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
 import fireDb from "../firebase";
@@ -21,6 +21,34 @@ function AddEdit() {
 
   const navigate = useNavigate();
 
+  const { id } = useParams();
+
+  useEffect(() => {
+    fireDb.child("restaurants").on("value", (snapshot) => {
+      if (snapshot.val() !== null) {
+        setData({ ...snapshot.val() });
+      } else {
+        setData({});
+      }
+    });
+
+    return () => {
+      setData({});
+    };
+  }, [id]);
+
+  useEffect(() => {
+    if (id) {
+      setState({ ...data[id] });
+    } else {
+      setState({ ...initialState });
+    }
+
+    return () => {
+      setState({ ...initialState });
+    };
+  }, [id, data]);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
 
@@ -33,13 +61,23 @@ function AddEdit() {
     if (!name || !address || !rating) {
       toast.error("Please provide value in each input field");
     } else {
-      fireDb.child("restaurants").push(state, (err) => {
-        if (err) {
-          toast.error(err);
-        } else {
-          toast.success("Restaurant added successfully");
-        }
-      });
+      if (!id) {
+        fireDb.child("restaurants").push(state, (err) => {
+          if (err) {
+            toast.error(err);
+          } else {
+            toast.success("Restaurant added successfully");
+          }
+        });
+      } else {
+        fireDb.child(`restaurants/${id}`).set(state, (err) => {
+          if (err) {
+            toast.error(err);
+          } else {
+            toast.success("Restaurant updated successfully");
+          }
+        });
+      }
       setTimeout(() => navigate("/"), 500);
     }
   };
@@ -57,7 +95,7 @@ function AddEdit() {
               className="form-control"
               id="name"
               name="name"
-              value={name}
+              value={name || ""}
               onChange={handleInputChange}
             />
           </div>
@@ -67,7 +105,7 @@ function AddEdit() {
               className="form-control"
               id="address"
               name="address"
-              value={address}
+              value={address || ""}
               onChange={handleInputChange}
             />
           </div>
@@ -78,13 +116,15 @@ function AddEdit() {
               className="form-control"
               id="rating"
               name="rating"
-              value={rating}
+              value={rating || ""}
               onChange={handleInputChange}
             />
           </div>
-          <button type="submit" className="btn btn-primary">
-            Submit
-          </button>
+          <input
+            type="submit"
+            className="btn btn-primary"
+            value={id ? "Update" : "Add"}
+          />
         </form>
       </div>
     </div>
