@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import fireDb from "../firebase";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Carousel from "react-bootstrap/Carousel";
 
 import "./View.css";
@@ -56,9 +56,15 @@ function View() {
           Restaurant Info
           <hr />
           <div className="info-text">
-            <p>Name - {restaurant.name}</p>
-            <p>Address - {restaurant.address}</p>
-            <p>Rating - {restaurant.rating}</p>
+            <p>
+              <strong>Name: </strong> {restaurant.name}
+            </p>
+            <p>
+              <strong>Address: </strong> {restaurant.address}
+            </p>
+            <p>
+              <strong>Rating: </strong> {restaurant.rating}
+            </p>
           </div>
         </div>
         <div className="col-md-1"></div>
