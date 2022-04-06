@@ -20,15 +20,24 @@ function Home() {
     // update search value
     setSearchValue(searchTerm);
 
-    const filtered = Object.values(data).filter(
+    const filteredValues = Object.values(data).filter(
       ({ name }) => name.toLowerCase().indexOf(searchTerm) > -1
     );
 
+    const filteredKeys = Object.keys(data).filter(
+      (id) => data[id].name.toLowerCase().indexOf(searchTerm) > -1
+    );
+
+    for (let i = 0; i < filteredValues.length; i++) {
+      filteredValues[i].id = filteredKeys[i];
+      filteredValues[i].index = i;
+    }
+
     console.log("data", data);
-    console.log("filtered", filtered);
+    console.log("filteredValues", filteredValues);
 
     // set filtered products in state
-    setFilteredItems(filtered);
+    setFilteredItems(filteredValues);
   }
 
   useEffect(() => {
@@ -112,15 +121,15 @@ function Home() {
                     </tr>
                   );
                 })
-              : filteredItems.map(({ name, address, rating }) => {
+              : filteredItems.map(({ name, address, rating, id, index }) => {
                   return (
-                    <tr key={name}>
-                      <th scope="row">{name + 1}</th>
+                    <tr key={index}>
+                      <th scope="row">{index + 1}</th>
                       <td>{name}</td>
                       <td>{address}</td>
                       <td>{rating}</td>
                       <td>
-                        <Link to={`/edit/${name}`}>
+                        <Link to={`/edit/${id}`}>
                           <button type="button" className="btn btn-secondary">
                             Edit
                           </button>
@@ -132,7 +141,7 @@ function Home() {
                         >
                           Delete
                         </button>
-                        <Link to={`/view/${name}`}>
+                        <Link to={`/view/${id}`}>
                           <button type="button" className="btn btn-secondary">
                             View
                           </button>
