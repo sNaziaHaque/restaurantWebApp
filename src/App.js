@@ -4,14 +4,16 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import Home from "./pages/Home";
-import AddEdit from "./pages/AddEdit";
-import View from "./pages/View";
+import Home from "./pages/home/Home";
+import AddEdit from "./pages/add-edit-restaurant/AddEditRestaurant";
+import View from "./pages/view-restaurant/ViewRestaurant";
 import Header from "./components/header/Header";
 
 import "./App.css";
 
 function App() {
+  const [user, setUser] = useState(null);
+
   return (
     <BrowserRouter>
       <div className="App">

@@ -3,9 +3,9 @@ import Carousel from "react-bootstrap/Carousel";
 
 import { useParams } from "react-router-dom";
 
-import { myDb } from "../firebase";
+import { myDb } from "../../firebase";
 
-import "./View.css";
+import "./ViewRestaurant.css";
 
 function View() {
   const [restaurant, setRestaurant] = useState({});

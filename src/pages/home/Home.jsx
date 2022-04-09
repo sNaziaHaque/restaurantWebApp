@@ -3,7 +3,7 @@ import { Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import { myDb } from "../firebase";
+import { myDb } from "../../firebase";
 
 import "./Home.css";
 

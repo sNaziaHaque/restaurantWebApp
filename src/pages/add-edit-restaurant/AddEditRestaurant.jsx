@@ -3,9 +3,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
 import { toast } from "react-toastify";
 
-import { myDb } from "../firebase";
+import { myDb } from "../../firebase";
 
-import "./AddEdit.css";
+import "./AddEditRestaurant.css";
 
 const initialState = {
   name: "",
