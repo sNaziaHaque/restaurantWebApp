@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
-import fireDb from "../firebase";
 import { toast } from "react-toastify";
+
+import { myDb } from "../firebase";
 
 import "./AddEdit.css";
 
@@ -24,7 +25,7 @@ function AddEdit() {
   const { id } = useParams();
 
   useEffect(() => {
-    fireDb.child("restaurants").on("value", (snapshot) => {
+    myDb.child("restaurants").on("value", (snapshot) => {
       if (snapshot.val() !== null) {
         setData({ ...snapshot.val() });
       } else {
@@ -62,7 +63,7 @@ function AddEdit() {
       toast.error("Please provide value in each input field");
     } else {
       if (!id) {
-        fireDb.child("restaurants").push(state, (err) => {
+        myDb.child("restaurants").push(state, (err) => {
           if (err) {
             toast.error(err);
           } else {
@@ -70,7 +71,7 @@ function AddEdit() {
           }
         });
       } else {
-        fireDb.child(`restaurants/${id}`).set(state, (err) => {
+        myDb.child(`restaurants/${id}`).set(state, (err) => {
           if (err) {
             toast.error(err);
           } else {

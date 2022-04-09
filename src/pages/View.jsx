@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
-import fireDb from "../firebase";
-import { useParams } from "react-router-dom";
 import Carousel from "react-bootstrap/Carousel";
+
+import { useParams } from "react-router-dom";
+
+import { myDb } from "../firebase";
 
 import "./View.css";
 
@@ -11,7 +13,7 @@ function View() {
   const { id } = useParams();
 
   useEffect(() => {
-    fireDb
+    myDb
       .child(`restaurants/${id}`)
       .get()
       .then((snapshot) => {

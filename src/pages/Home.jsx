@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import fireDb from "../firebase";
+
+import { myDb } from "../firebase";
 
 import "./Home.css";
 
@@ -42,7 +43,7 @@ function Home() {
 
   useEffect(() => {
     console.log("data", data);
-    fireDb.child("restaurants").on("value", (snapshot) => {
+    myDb.child("restaurants").on("value", (snapshot) => {
       if (snapshot.val() !== null) {
         setData({ ...snapshot.val() });
       } else {
@@ -57,7 +58,7 @@ function Home() {
 
   const onDelete = (id) => {
     if (window.confirm("Are you sure you want to delete ?")) {
-      fireDb.child(`restaurants/${id}`).remove((err) => {
+      myDb.child(`restaurants/${id}`).remove((err) => {
         if (err) {
           toast.error(err);
         } else {
