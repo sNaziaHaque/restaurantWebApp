@@ -1,13 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Table } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import { myDb } from "../../firebase";
+import { getAuth, signOut } from "firebase/auth";
+
+import { myAuth, myDb } from "../../firebase";
 
 import "./Home.css";
+import AuthContext from "../../context/AuthProvider";
 
 function Home() {
+  const { setAuth } = useContext(AuthContext);
+  const navigate = useNavigate();
+
   const [data, setData] = useState({});
 
   const [filteredItems, setFilteredItems] = useState([]);
@@ -34,15 +40,11 @@ function Home() {
       filteredValues[i].index = i;
     }
 
-    console.log("data", data);
-    console.log("filteredValues", filteredValues);
-
     // set filtered products in state
     setFilteredItems(filteredValues);
   }
 
   useEffect(() => {
-    console.log("data", data);
     myDb.child("restaurants").on("value", (snapshot) => {
       if (snapshot.val() !== null) {
         setData({ ...snapshot.val() });
@@ -80,6 +82,16 @@ function Home() {
           />
         </form>
       </div>
+      <button
+        onClick={() => {
+          signOut(myAuth);
+          setAuth({});
+          navigate("/login");
+        }}
+      >
+        Logout
+      </button>
+      {/* {user.role === 'admin' ? 'ADMIN' : 'USER'} */}
       <div className="restaurant-table">
         <Table striped bordered hover>
           <thead>
