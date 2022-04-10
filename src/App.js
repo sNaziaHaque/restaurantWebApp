@@ -16,6 +16,7 @@ import { myFirebase, myAuth } from "./firebase";
 
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
+import PublicHome from "./pages/public-home/PublicHome";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -57,13 +58,14 @@ function App() {
       <Route path="/" element={<Layout />}>
         {/* public route */}
         <Route path="login" element={<Login />} />
+        <Route path="home" element={<PublicHome />} />
+        <Route path="view/:id" element={<ViewRestaurant />} />
 
         {/* private routes */}
         <Route element={<RequireAuth />}>
           <Route path="/" element={<Home />} />
           <Route path="add" element={<AddEditRestaurant />} />
           <Route path="edit/:id" element={<AddEditRestaurant />} />
-          <Route path="view/:id" element={<ViewRestaurant />} />
         </Route>
 
         {/* catch all */}
