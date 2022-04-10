@@ -2,10 +2,6 @@ import firebase from "firebase/compat/app";
 import "firebase/compat/database";
 import "firebase/compat/auth";
 
-// import { initializeApp } from "firebase/app";
-// import { getAuth } from "firebase/auth";
-// import { getDatabase } from "firebase/database";
-
 var firebaseConfig = {
   apiKey: "AIzaSyBTYKKOs3d7ADsjsDVX9gn0EnJ7Nlq1i68",
   authDomain: "restaurant-app-f93f0.firebaseapp.com",
@@ -21,9 +17,3 @@ export const myFirebase = firebase.initializeApp(firebaseConfig);
 export const myAuth = firebase.auth();
 
 export const myDb = myFirebase.database().ref();
-
-// export const myFirebase = initializeApp(firebaseConfig);
-
-// export const myAuth = getAuth(myFirebase);
-
-// export const myDb = getDatabase();

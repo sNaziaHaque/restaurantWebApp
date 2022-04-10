@@ -38,7 +38,8 @@ function Login() {
     )
       .then((user) => {
         setAuth({ user });
-        navigate(from, { replace: true });
+        // navigate(from, { replace: true });
+        navigate("/");
       })
       .catch((error) => {
         toast.error(error.message);
@@ -64,7 +65,8 @@ function Login() {
           .then((user) => {
             // logged in
             setAuth({ user });
-            navigate(from, { replace: true });
+            // navigate(from, { replace: true });
+            navigate("/");
           })
           .catch((error) => {
             toast.error(error.message);

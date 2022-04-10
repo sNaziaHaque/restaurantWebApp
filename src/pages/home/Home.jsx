@@ -1,19 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Table } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import { getAuth, signOut } from "firebase/auth";
-
-import { myAuth, myDb } from "../../firebase";
+import { myDb } from "../../firebase";
 
 import "./Home.css";
-import AuthContext from "../../context/AuthProvider";
 
 function Home() {
-  const { setAuth } = useContext(AuthContext);
-  const navigate = useNavigate();
-
   const [data, setData] = useState({});
 
   const [filteredItems, setFilteredItems] = useState([]);
@@ -82,15 +76,7 @@ function Home() {
           />
         </form>
       </div>
-      <button
-        onClick={() => {
-          signOut(myAuth);
-          setAuth({});
-          navigate("/login");
-        }}
-      >
-        Logout
-      </button>
+
       {/* {user.role === 'admin' ? 'ADMIN' : 'USER'} */}
       <div className="restaurant-table">
         <Table striped bordered hover>
