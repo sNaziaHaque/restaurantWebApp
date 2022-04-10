@@ -13,7 +13,7 @@ const initialState = {
   rating: "",
 };
 
-function AddEdit() {
+function AddEditRestaurant() {
   const [state, setState] = useState(initialState);
   const [data, setData] = useState({});
 
@@ -132,4 +132,4 @@ function AddEdit() {
   );
 }
 
-export default AddEdit;
+export default AddEditRestaurant;

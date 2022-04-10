@@ -7,7 +7,7 @@ import { myDb } from "../../firebase";
 
 import "./ViewRestaurant.css";
 
-function View() {
+function ViewRestaurant() {
   const [restaurant, setRestaurant] = useState({});
 
   const { id } = useParams();
@@ -79,4 +79,4 @@ function View() {
   );
 }
 
-export default View;
+export default ViewRestaurant;

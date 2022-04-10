@@ -3,9 +3,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
 import Home from "./pages/home/Home";
-import AddEdit from "./pages/add-edit-restaurant/AddEditRestaurant";
-import View from "./pages/view-restaurant/ViewRestaurant";
-import Header from "./components/header/Header";
+import AddEditRestaurant from "./pages/add-edit-restaurant/AddEditRestaurant";
+import ViewRestaurant from "./pages/view-restaurant/ViewRestaurant";
 import Login from "./pages/login/Login";
 import Layout from "./components/layout/Layout";
 import Missing from "./components/missing/Missing";
@@ -62,9 +61,9 @@ function App() {
         {/* private routes */}
         <Route element={<RequireAuth />}>
           <Route path="/" element={<Home />} />
-          <Route path="add" element={<AddEdit />} />
-          <Route path="edit/:id" element={<AddEdit />} />
-          <Route path="view/:id" element={<View />} />
+          <Route path="add" element={<AddEditRestaurant />} />
+          <Route path="edit/:id" element={<AddEditRestaurant />} />
+          <Route path="view/:id" element={<ViewRestaurant />} />
         </Route>
 
         {/* catch all */}
