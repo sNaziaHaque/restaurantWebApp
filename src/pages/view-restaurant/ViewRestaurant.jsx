@@ -75,7 +75,7 @@ function ViewRestaurant() {
           Menu
           <hr />
           <Tabs
-            defaultActiveKey="profile"
+            defaultActiveKey="lunch"
             id="uncontrolled-tab-example"
             className="mb-3"
           >
