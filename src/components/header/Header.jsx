@@ -30,38 +30,66 @@ const Header = () => {
   return (
     <div className="header">
       <p className="logo">Restaurant App</p>
-      <div className="header-middle">
-        <Link to="/">
-          <p
-            className={`${activeTab === "Home" ? "active" : ""}`}
-            onClick={() => setActiveTab("Home")}
-          >
-            Home
-          </p>
-        </Link>
-        <Link to="/add">
-          <p
-            className={`${activeTab === "AddRestaurant" ? "active" : ""}`}
-            onClick={() => setActiveTab("AddRestaurant")}
-          >
-            Add Restaurant
-          </p>
-        </Link>
-      </div>
-      <div className="header-right">
-        <p>
-          Logged in as <strong>{userEmail}</strong>
-        </p>
-        <button
-          onClick={() => {
-            signOut(myAuth);
-            setAuth({});
-            navigate("/login");
-          }}
-        >
-          Logout
-        </button>
-      </div>
+      {auth?.user ? (
+        <>
+          <div className="header-middle">
+            <Link to="/">
+              <p
+                className={`${activeTab === "Home" ? "active" : ""}`}
+                onClick={() => setActiveTab("Home")}
+              >
+                Home
+              </p>
+            </Link>
+            <Link to="/add">
+              <p
+                className={`${activeTab === "AddRestaurant" ? "active" : ""}`}
+                onClick={() => setActiveTab("AddRestaurant")}
+              >
+                Add Restaurant
+              </p>
+            </Link>
+          </div>
+          <div className="header-right">
+            <p>
+              Logged in as <strong>{userEmail}</strong>
+            </p>
+            <button
+              onClick={() => {
+                signOut(myAuth);
+                setAuth({});
+                navigate("/login");
+              }}
+            >
+              Logout
+            </button>
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="header-middle">
+            <Link to="/home">
+              <p
+                className={`${activeTab === "Home" ? "active" : ""}`}
+                onClick={() => setActiveTab("Home")}
+              >
+                Home
+              </p>
+            </Link>
+          </div>
+          <div className="header-right">
+            <button
+              onClick={() => {
+                signOut(myAuth);
+                setAuth({});
+                navigate("/login");
+              }}
+            >
+              Login
+            </button>
+          </div>
+        </>
+      )}
     </div>
   );
 };
