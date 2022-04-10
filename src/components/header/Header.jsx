@@ -1,11 +1,23 @@
-import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+
+import { signOut } from "firebase/auth";
+
+import { myAuth } from "../../firebase";
+
+import AuthContext from "../../context/AuthProvider";
 
 import "./Header.css";
 
 const Header = () => {
-  const [activeTab, setActiveTab] = useState("Home");
+  const { setAuth, auth } = useContext(AuthContext);
+
+  const userEmail = auth?.user?.user?.email;
+  const navigate = useNavigate();
+
   const location = useLocation();
+
+  const [activeTab, setActiveTab] = useState("Home");
 
   useEffect(() => {
     if (location.pathname === "/") {
@@ -18,7 +30,7 @@ const Header = () => {
   return (
     <div className="header">
       <p className="logo">Restaurant App</p>
-      <div className="header-right">
+      <div className="header-middle">
         <Link to="/">
           <p
             className={`${activeTab === "Home" ? "active" : ""}`}
@@ -35,6 +47,20 @@ const Header = () => {
             Add Restaurant
           </p>
         </Link>
+      </div>
+      <div className="header-right">
+        <p>
+          Logged in as <strong>{userEmail}</strong>
+        </p>
+        <button
+          onClick={() => {
+            signOut(myAuth);
+            setAuth({});
+            navigate("/login");
+          }}
+        >
+          Logout
+        </button>
       </div>
     </div>
   );

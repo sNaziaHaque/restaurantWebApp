@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from "react";
-import fireDb from "../firebase";
-import { useParams } from "react-router-dom";
 import Carousel from "react-bootstrap/Carousel";
 
-import "./View.css";
+import { useParams } from "react-router-dom";
 
-function View() {
+import { myDb } from "../../firebase";
+
+import "./ViewRestaurant.css";
+
+function ViewRestaurant() {
   const [restaurant, setRestaurant] = useState({});
 
   const { id } = useParams();
 
   useEffect(() => {
-    fireDb
+    myDb
       .child(`restaurants/${id}`)
       .get()
       .then((snapshot) => {
@@ -77,4 +79,4 @@ function View() {
   );
 }
 
-export default View;
+export default ViewRestaurant;

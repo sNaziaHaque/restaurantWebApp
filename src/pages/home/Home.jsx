@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import fireDb from "../firebase";
+
+import { myDb } from "../../firebase";
 
 import "./Home.css";
 
@@ -33,16 +34,12 @@ function Home() {
       filteredValues[i].index = i;
     }
 
-    console.log("data", data);
-    console.log("filteredValues", filteredValues);
-
     // set filtered products in state
     setFilteredItems(filteredValues);
   }
 
   useEffect(() => {
-    console.log("data", data);
-    fireDb.child("restaurants").on("value", (snapshot) => {
+    myDb.child("restaurants").on("value", (snapshot) => {
       if (snapshot.val() !== null) {
         setData({ ...snapshot.val() });
       } else {
@@ -57,7 +54,7 @@ function Home() {
 
   const onDelete = (id) => {
     if (window.confirm("Are you sure you want to delete ?")) {
-      fireDb.child(`restaurants/${id}`).remove((err) => {
+      myDb.child(`restaurants/${id}`).remove((err) => {
         if (err) {
           toast.error(err);
         } else {
@@ -79,6 +76,8 @@ function Home() {
           />
         </form>
       </div>
+
+      {/* {user.role === 'admin' ? 'ADMIN' : 'USER'} */}
       <div className="restaurant-table">
         <Table striped bordered hover>
           <thead>
