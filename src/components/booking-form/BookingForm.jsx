@@ -2,7 +2,15 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+
 import { myDb } from "../../firebase";
+import Payment from "../payment/Payment";
+
+const promise = loadStripe(
+  "pk_test_51KnFl1KU6Pl5JZjLTZ7UycftaESG7VAxP2CAhLzy0swg58QgtGCEkhNUAaOlN4BVDPe7iYZMpgVymsZaaRBhaCwC00pOeCdl5k"
+);
 
 function BookingForm({ restaurantId }) {
   const navigate = useNavigate();
@@ -161,7 +169,7 @@ function BookingForm({ restaurantId }) {
               </div>
             </div>
             <br />
-            <div className="row">
+            {/* <div className="row">
               <div className="col-md-12">
                 <input
                   type="submit"
@@ -172,8 +180,16 @@ function BookingForm({ restaurantId }) {
                   onChange={handleInputChange}
                 />
               </div>
-            </div>
+            </div> */}
           </form>
+          <div className="row">
+            <div className="col-md-4"></div>
+            <div className="col-md-4">
+              <Elements stripe={promise}>
+                <Payment />
+              </Elements>
+            </div>
+          </div>
         </div>
       </div>
     </div>
