@@ -25,6 +25,7 @@ function BookingForm({ restaurantId }) {
     resId: restaurantId,
     bookingAmount: 0,
     paymentStatus: "pending",
+    paymentId: "",
   };
 
   const [state, setState] = useState(initialState);
@@ -61,19 +62,6 @@ function BookingForm({ restaurantId }) {
           setShowBookingSubmitted(true);
         }
       });
-
-      // myDb.child(key).push(state, (err) => {
-      //   if (err) {
-      //     toast.error(err);
-      //   } else {
-      //     toast.success("Booking request submitted successfully");
-
-      //     setShowBookingForm(false);
-      //     setShowBookingSubmitted(true);
-      //   }
-      // });
-
-      // setTimeout(() => navigate("/home"), 500);
     }
   };
 

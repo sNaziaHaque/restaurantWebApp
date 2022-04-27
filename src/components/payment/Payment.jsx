@@ -57,6 +57,7 @@ function Payment({ handlePaymentStatus, bookingKey }) {
         myDb.child(`bookings/${bookingKey}`).update({
           bookingAmount: totalAmount,
           paymentStatus: "done",
+          paymentId: paymentIntent.id,
         });
 
         // setTimeout(() => navigate("/home"), 500);
