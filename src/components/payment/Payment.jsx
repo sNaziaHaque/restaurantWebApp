@@ -3,8 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import CurrencyFormat from "react-currency-format";
 import axios from "../../axios";
+import { myDb } from "../../firebase";
 
-function Payment() {
+function Payment({ handlePaymentStatus, bookingKey }) {
   const navigate = useNavigate();
 
   const stripe = useStripe();
@@ -16,10 +17,10 @@ function Payment() {
   const [disabled, setDisabled] = useState(true);
   const [processing, setProcessing] = useState("");
   const [succeeded, setSucceeded] = useState(false);
-  const [clientSecret, setClientSecret] = useState(false);
+  const [clientSecret, setClientSecret] = useState(true);
 
   useEffect(() => {
-    console.log("totalAmount", totalAmount);
+    // console.log("totalAmount", totalAmount);
     // Generate the special client secret which allows us to charge a customer
     const getClientSecret = async () => {
       const response = await axios({
@@ -30,10 +31,10 @@ function Payment() {
       setClientSecret(response.data.clientSecret);
     };
 
-    // getClientSecret();
+    getClientSecret();
   }, [totalAmount]);
 
-  //   console.log("THE CLIENT SECRET IS >>>", clientSecret);
+  console.log("THE CLIENT SECRET IS >>>", clientSecret);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -53,7 +54,13 @@ function Payment() {
         setError(null);
         setProcessing(false);
 
-        setTimeout(() => navigate("/home"), 500);
+        myDb.child(`bookings/${bookingKey}`).update({
+          bookingAmount: totalAmount,
+          paymentStatus: "done",
+        });
+
+        // setTimeout(() => navigate("/home"), 500);
+        handlePaymentStatus();
       });
   };
 
@@ -73,7 +80,7 @@ function Payment() {
           <CurrencyFormat
             value={totalAmount}
             thousandSeparator={true}
-            prefix={"$"}
+            // prefix={"$"}
             onValueChange={(values) => {
               const { formattedValue, value } = values;
               // formattedValue = $2,223
