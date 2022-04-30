@@ -2,13 +2,18 @@ import React, { useState, useEffect, useContext } from "react";
 import { Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import AuthContext from "../../context/AuthProvider";
 
 import { myDb } from "../../firebase";
 
 import "./Home.css";
 
 function Home() {
+  const { user } = useContext(AuthContext);
+  console.log("value", user?.role);
+
   const [data, setData] = useState({});
+  const [bookingData, setBookingData] = useState({});
 
   const [filteredItems, setFilteredItems] = useState([]);
   const [searchValue, setSearchValue] = useState("");
@@ -47,10 +52,23 @@ function Home() {
       }
     });
 
+    myDb.child("bookings").on("value", (snapshot) => {
+      if (snapshot.val() !== null) {
+        setBookingData({ ...snapshot.val() });
+      } else {
+        setBookingData({});
+      }
+    });
+
     return () => {
       setData({});
+      setBookingData({});
     };
   }, []);
+
+  useEffect(() => {
+    console.log("bookingData", bookingData);
+  }, [bookingData]);
 
   const onDelete = (id) => {
     if (window.confirm("Are you sure you want to delete ?")) {
