@@ -10,7 +10,7 @@ import "./Home.css";
 
 function Home() {
   const { user } = useContext(AuthContext);
-  console.log("value", user?.role);
+  console.log("role", user?.role);
 
   const [data, setData] = useState({});
   const [bookingData, setBookingData] = useState({});
@@ -67,6 +67,8 @@ function Home() {
   }, []);
 
   useEffect(() => {
+    console.log("data", data);
+
     console.log("bookingData", bookingData);
   }, [bookingData]);
 
