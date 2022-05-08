@@ -74,7 +74,7 @@ function PublicHome() {
             ? Object.keys(data).map((id, index) => {
                 return (
                   <div className="col-md-4 mx-0 mb-4" key={index}>
-                    <Link to={`/view/${id}`}>
+                    <Link to={`/view-restaurant/${id}`}>
                       <div className="card p-0 overflow-hidden h-100 shadow">
                         <img
                           src="../../images/1.jpg"
@@ -96,7 +96,7 @@ function PublicHome() {
             : filteredItems.map(({ name, address, rating, id, index }) => {
                 return (
                   <div className="col-md-4 mx-0 mb-4" key={index}>
-                    <Link to={`/view/${id}`}>
+                    <Link to={`/view-restaurant/${id}`}>
                       <div className="card p-0 overflow-hidden h-100 shadow">
                         <img
                           src="../../images/1.jpg"

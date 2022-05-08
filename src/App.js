@@ -11,6 +11,7 @@ import Login from "./pages/login/Login";
 import ViewRestaurant from "./pages/view-restaurant/ViewRestaurant";
 import AddEditRestaurant from "./pages/add-edit-restaurant/AddEditRestaurant";
 import ViewBookings from "./pages/view-bookings/ViewBookings";
+import EditBooking from "./pages/edit-booking/EditBooking";
 
 import "react-toastify/dist/ReactToastify.css";
 
@@ -31,6 +32,7 @@ function App() {
           <Route path="add" element={<AddEditRestaurant />} />
           <Route path="edit/:id" element={<AddEditRestaurant />} />
           <Route path="view-bookings" element={<ViewBookings />} />
+          <Route path="edit-booking/:id" element={<EditBooking />} />
         </Route>
 
         {/* catch all */}

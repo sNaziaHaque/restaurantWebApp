@@ -1,33 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Form, Button } from "react-bootstrap";
 import { toast } from "react-toastify";
-
 import { myDb } from "../../firebase";
 
-import "./AddEditRestaurant.css";
+import "./EditBooking.css";
 
 const initialState = {
   name: "",
   email: "",
   phone: "",
-  address: "",
-  rating: "",
+  bookingStatus: "",
 };
 
-function AddEditRestaurant() {
+function EditBooking() {
   const [state, setState] = useState(initialState);
   const [data, setData] = useState({});
 
-  // Destructuring
-  const { name, email, phone, address, rating } = state;
+  const { name, email, phone, bookingStatus } = state;
 
   const navigate = useNavigate();
 
   const { id } = useParams();
 
   useEffect(() => {
-    myDb.child("restaurants").on("value", (snapshot) => {
+    myDb.child("bookings").on("value", (snapshot) => {
       if (snapshot.val() !== null) {
         setData({ ...snapshot.val() });
       } else {
@@ -61,38 +57,29 @@ function AddEditRestaurant() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!name || !email || !phone || !address || !rating) {
+    if (!name || !email || !phone || !bookingStatus) {
       toast.error("Please provide value in each input field");
     } else {
-      if (!id) {
-        myDb.child("restaurants").push(state, (err) => {
-          if (err) {
-            toast.error(err);
-          } else {
-            toast.success("Restaurant added successfully");
-          }
-        });
-      } else {
-        myDb.child(`restaurants/${id}`).set(state, (err) => {
-          if (err) {
-            toast.error(err);
-          } else {
-            toast.success("Restaurant updated successfully");
-          }
-        });
-      }
-      setTimeout(() => navigate("/"), 500);
+      myDb.child(`bookings/${id}`).set(state, (err) => {
+        if (err) {
+          toast.error(err);
+        } else {
+          toast.success("Booking updated successfully");
+        }
+      });
+
+      setTimeout(() => navigate("/view-bookings"), 500);
     }
   };
 
   return (
-    <div className="add-edit-form shadow p-3 mb-5 bg-white rounded">
+    <div className="edit-booking-form shadow p-3 mb-5 bg-white rounded">
       <form onSubmit={handleSubmit}>
-        <h3>Add a restaurant</h3>
+        <h3>Edit Booking Details</h3>
         <hr />
         <br />
         <div className="mb-3">
-          <label className="form-label">Restaurant name</label>
+          <label className="form-label">Customer name</label>
           <input
             type="text"
             className="form-control"
@@ -103,7 +90,7 @@ function AddEditRestaurant() {
           />
         </div>
         <div className="mb-3">
-          <label className="form-label">Restaurant email</label>
+          <label className="form-label">Customer email</label>
           <input
             type="email"
             className="form-control"
@@ -114,7 +101,7 @@ function AddEditRestaurant() {
           />
         </div>
         <div className="mb-3">
-          <label className="form-label">Restaurant phone</label>
+          <label className="form-label">Customer phone</label>
           <input
             type="number"
             className="form-control"
@@ -125,34 +112,29 @@ function AddEditRestaurant() {
           />
         </div>
         <div className="mb-3">
-          <label className="form-label">Restaurant Address</label>
-          <textarea
-            className="form-control"
-            id="address"
-            name="address"
-            value={address || ""}
-            onChange={handleInputChange}
-          />
+          <div className="form-group">
+            <label htmlFor="people">Booking status</label>
+            <div className="form-field">
+              <i className="icon icon-chevron-down"></i>
+              <select
+                name="bookingStatus"
+                id="bookingStatus"
+                className="form-control"
+                onChange={handleInputChange}
+                value={bookingStatus}
+              >
+                <option value="">Choose here</option>
+                <option value="pending">Pending</option>
+                <option value="rejected">Rejected</option>
+                <option value="confirmed">Confirmed</option>
+              </select>
+            </div>
+          </div>
         </div>
-        <div className="mb-3">
-          <label className="form-label">Restaurant Rating</label>
-          <input
-            type="number"
-            className="form-control"
-            id="rating"
-            name="rating"
-            value={rating || ""}
-            onChange={handleInputChange}
-          />
-        </div>
-        <input
-          type="submit"
-          className="btn btn-primary"
-          value={id ? "Update" : "Add"}
-        />
+        <input type="submit" className="btn btn-primary" value="Update" />
       </form>
     </div>
   );
 }
 
-export default AddEditRestaurant;
+export default EditBooking;

@@ -1,0 +1,10 @@
+.bookings-table {
+  display: flex;
+  justify-content: center;
+  padding-top: 40px;
+  margin: 40px;
+}
+
+.btn {
+  margin: 4px 2px;
+}

@@ -30,7 +30,7 @@ function ViewRestaurant() {
           setRestaurant({});
         }
       });
-  }, [id]);
+  }, []);
 
   return (
     <div>
@@ -217,7 +217,7 @@ function ViewRestaurant() {
           </Tabs>
         </div>
       </div>
-      {user.role !== "admin" ? <BookingForm restaurantId={id} /> : null}
+      <BookingForm restaurantId={id} {...restaurant} />
     </div>
   );
 }

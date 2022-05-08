@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -12,30 +12,18 @@ const promise = loadStripe(
   "pk_test_51KnFl1KU6Pl5JZjLTZ7UycftaESG7VAxP2CAhLzy0swg58QgtGCEkhNUAaOlN4BVDPe7iYZMpgVymsZaaRBhaCwC00pOeCdl5k"
 );
 
-function BookingForm({ restaurantId }) {
+function BookingForm(props) {
   const navigate = useNavigate();
 
-  const initialState = {
-    people: "",
-    date: "",
-    time: "",
-    name: "",
-    email: "",
-    phone: "",
-    resId: restaurantId,
-    bookingAmount: 0,
-    paymentStatus: "pending",
-    paymentId: "",
-  };
-
-  const [state, setState] = useState(initialState);
+  const [state, setState] = useState({});
   const [showBookingForm, setShowBookingForm] = useState(true);
   const [showBookingSubmitted, setShowBookingSubmitted] = useState(false);
   const [showPaymentForm, setShowPaymentForm] = useState(false);
   const [showPaymentSuccess, setShowPaymentSuccess] = useState(false);
   const [bookingKey, setBookingKey] = useState("");
 
-  const { people, date, time, name, email, phone, resId } = state;
+  const { people, date, time, name, email, phone, resId, resName, resAddress } =
+    state;
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -57,6 +45,7 @@ function BookingForm({ restaurantId }) {
           toast.error(err);
         } else {
           toast.success("Booking request submitted successfully");
+          console.log("state", state);
 
           setShowBookingForm(false);
           setShowBookingSubmitted(true);
@@ -70,6 +59,26 @@ function BookingForm({ restaurantId }) {
     setShowPaymentSuccess(true);
   };
 
+  useEffect(() => {
+    const initialState = {
+      people: "",
+      date: "",
+      time: "",
+      name: "",
+      email: "",
+      phone: "",
+      resId: props?.restaurantId,
+      resName: props?.name,
+      resAddress: props?.address,
+      bookingAmount: 0,
+      paymentId: "",
+      paymentStatus: "pending",
+      bookingStatus: "pending",
+    };
+
+    setState(initialState);
+  }, [props]);
+
   return (
     <div className="container shadow p-3 mb-5 bg-white rounded">
       {showBookingForm ? (
@@ -77,7 +86,6 @@ function BookingForm({ restaurantId }) {
           <div className="row">
             <div className="col-md-12 text-center probootstrap-animate">
               <div className="probootstrap-heading">
-                {/* <h2 className="primary-heading">Booking</h2> */}
                 <h3 className="secondary-heading">Reserve A Table</h3>
               </div>
             </div>

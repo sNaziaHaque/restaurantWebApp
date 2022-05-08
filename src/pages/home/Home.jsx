@@ -90,7 +90,6 @@ function Home() {
         </form>
       </div>
 
-      {/* {user.role === 'admin' ? 'ADMIN' : 'USER'} */}
       <div className="restaurant-table">
         <Table striped bordered hover>
           <thead>
