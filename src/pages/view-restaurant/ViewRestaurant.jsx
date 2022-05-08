@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Tabs, Tab, ListGroup } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 
@@ -6,11 +6,15 @@ import Carousel from "react-bootstrap/Carousel";
 
 import BookingForm from "../../components/booking-form/BookingForm";
 
+import AuthContext from "../../context/AuthProvider";
+
 import { myDb } from "../../firebase";
 
 import "./ViewRestaurant.css";
 
 function ViewRestaurant() {
+  const { user } = useContext(AuthContext);
+
   const [restaurant, setRestaurant] = useState({});
 
   const { id } = useParams();
@@ -213,8 +217,7 @@ function ViewRestaurant() {
           </Tabs>
         </div>
       </div>
-
-      <BookingForm restaurantId={id} />
+      {user.role !== "admin" ? <BookingForm restaurantId={id} /> : null}
     </div>
   );
 }
