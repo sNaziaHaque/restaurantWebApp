@@ -54,7 +54,7 @@ function Login() {
 
     const email = e.target.elements.email.value;
     const password = e.target.elements.password.value;
-    const role = isRegister ? e.target.elements.role.value : null;
+    const role = isRegister ? "manager" : null;
 
     if (!email || !password) {
       toast.error("Please provide value in each input field");
@@ -103,7 +103,7 @@ function Login() {
               onChange={handleInputChange}
             />
           </div>
-          {isRegister && (
+          {/* {isRegister && (
             <div className="mb-3">
               <label className="form-label">Role</label>
               <select className="form-control" name="role" id="role">
@@ -111,7 +111,7 @@ function Login() {
                 <option value="manager">Manager</option>
               </select>
             </div>
-          )}
+          )} */}
           <input
             type="submit"
             className="btn btn-primary"
