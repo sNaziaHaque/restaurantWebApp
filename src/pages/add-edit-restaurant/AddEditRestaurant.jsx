@@ -9,6 +9,8 @@ import "./AddEditRestaurant.css";
 
 const initialState = {
   name: "",
+  email: "",
+  phone: "",
   address: "",
   rating: "",
 };
@@ -18,7 +20,7 @@ function AddEditRestaurant() {
   const [data, setData] = useState({});
 
   // Destructuring
-  const { name, address, rating } = state;
+  const { name, email, phone, address, rating } = state;
 
   const navigate = useNavigate();
 
@@ -59,7 +61,7 @@ function AddEditRestaurant() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!name || !address || !rating) {
+    if (!name || !email || !phone || !address || !rating) {
       toast.error("Please provide value in each input field");
     } else {
       if (!id) {
@@ -97,6 +99,28 @@ function AddEditRestaurant() {
               id="name"
               name="name"
               value={name || ""}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="mb-3">
+            <label className="form-label">Restaurant email</label>
+            <input
+              type="email"
+              className="form-control"
+              id="email"
+              name="email"
+              value={email || ""}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="mb-3">
+            <label className="form-label">Restaurant phone</label>
+            <input
+              type="number"
+              className="form-control"
+              id="phone"
+              name="phone"
+              value={phone || ""}
               onChange={handleInputChange}
             />
           </div>

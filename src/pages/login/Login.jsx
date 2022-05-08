@@ -39,14 +39,14 @@ function Login() {
       .then((user) => {
         setAuth({ user });
         // navigate(from, { replace: true });
+
+        const docRef = doc(myFirestore, `users/${user?.user?.uid}`);
+        setDoc(docRef, { email: email, role: role });
         navigate("/");
       })
       .catch((error) => {
         toast.error(error.message);
       });
-
-    const docRef = doc(myFirestore, `users/${infoUser.user?.uid}`);
-    setDoc(docRef, { email: email, role: role });
   }
 
   const handleSubmit = (e) => {

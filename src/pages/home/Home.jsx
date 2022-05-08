@@ -10,7 +10,6 @@ import "./Home.css";
 
 function Home() {
   const { user } = useContext(AuthContext);
-  console.log("role", user?.role);
 
   const [data, setData] = useState({});
   const [bookingData, setBookingData] = useState({});
@@ -65,12 +64,6 @@ function Home() {
       setBookingData({});
     };
   }, []);
-
-  useEffect(() => {
-    console.log("data", data);
-
-    console.log("bookingData", bookingData);
-  }, [bookingData]);
 
   const onDelete = (id) => {
     if (window.confirm("Are you sure you want to delete ?")) {

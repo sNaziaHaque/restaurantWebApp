@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }) => {
   async function getRole(uid) {
     const docRef = doc(firestore, `users/${uid}`);
     const responseDoc = await getDoc(docRef);
-    const finalData = responseDoc.data().role;
+    const finalData = responseDoc?.data()?.role;
 
     return finalData;
   }
