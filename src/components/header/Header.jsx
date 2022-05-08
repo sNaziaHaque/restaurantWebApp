@@ -10,7 +10,7 @@ import AuthContext from "../../context/AuthProvider";
 import "./Header.css";
 
 const Header = () => {
-  const { setAuth, auth } = useContext(AuthContext);
+  const { setAuth, auth, user } = useContext(AuthContext);
 
   const userEmail = auth?.user?.user?.email;
   const navigate = useNavigate();
@@ -41,14 +41,15 @@ const Header = () => {
                 Home
               </p>
             </Link>
-            <Link to="/add">
+      {user.role === "admin" && (<Link to="/add">
               <p
                 className={`${activeTab === "AddRestaurant" ? "active" : ""}`}
                 onClick={() => setActiveTab("AddRestaurant")}
               >
                 Add Restaurant
               </p>
-            </Link>
+            </Link>)}
+            
           </div>
           <div className="header-right">
             <p>
