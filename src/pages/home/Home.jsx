@@ -97,6 +97,8 @@ function Home() {
             <tr>
               <th>#</th>
               <th>Restaurant Name</th>
+              <th>Email</th>
+              <th>Phone Number</th>
               <th>Address</th>
               <th>Rating</th>
               <th>Actions</th>
@@ -109,6 +111,8 @@ function Home() {
                     <tr key={index}>
                       <th scope="row">{index + 1}</th>
                       <td>{data[id].name}</td>
+                      <td>{data[id].email}</td>
+                      <td>{data[id].phone}</td>
                       <td>{data[id].address}</td>
                       <td>{data[id].rating}</td>
                       <td>
@@ -133,10 +137,12 @@ function Home() {
                     </tr>
                   );
                 })
-              : filteredItems.map(({ name, address, rating, id, index }) => {
+              : filteredItems.map(({ name, email, phone, address, rating, id, index }) => {
                   return (
                     <tr key={index}>
                       <th scope="row">{index + 1}</th>
+                      <td>{name}</td>
+                      <td>{phone}</td>
                       <td>{name}</td>
                       <td>{address}</td>
                       <td>{rating}</td>
