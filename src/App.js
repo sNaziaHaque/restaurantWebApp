@@ -10,6 +10,7 @@ import PublicHome from "./pages/public-home/PublicHome";
 import Login from "./pages/login/Login";
 import ViewRestaurant from "./pages/view-restaurant/ViewRestaurant";
 import AddEditRestaurant from "./pages/add-edit-restaurant/AddEditRestaurant";
+import ViewBookings from "./pages/view-bookings/ViewBookings";
 
 import "react-toastify/dist/ReactToastify.css";
 
@@ -22,13 +23,14 @@ function App() {
         {/* public route */}
         <Route path="login" element={<Login />} />
         <Route path="home" element={<PublicHome />} />
-        <Route path="view/:id" element={<ViewRestaurant />} />
+        <Route path="view-restaurant/:id" element={<ViewRestaurant />} />
 
         {/* private routes */}
         <Route element={<RequireAuth />}>
           <Route path="/" element={<Home />} />
           <Route path="add" element={<AddEditRestaurant />} />
           <Route path="edit/:id" element={<AddEditRestaurant />} />
+          <Route path="view-bookings" element={<ViewBookings />} />
         </Route>
 
         {/* catch all */}

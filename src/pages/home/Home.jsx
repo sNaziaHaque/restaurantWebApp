@@ -128,7 +128,7 @@ function Home() {
                         >
                           Delete
                         </button>
-                        <Link to={`/view/${id}`}>
+                        <Link to={`/view-restaurant/${id}`}>
                           <button type="button" className="btn btn-secondary">
                             View
                           </button>
@@ -137,37 +137,39 @@ function Home() {
                     </tr>
                   );
                 })
-              : filteredItems.map(({ name, email, phone, address, rating, id, index }) => {
-                  return (
-                    <tr key={index}>
-                      <th scope="row">{index + 1}</th>
-                      <td>{name}</td>
-                      <td>{phone}</td>
-                      <td>{name}</td>
-                      <td>{address}</td>
-                      <td>{rating}</td>
-                      <td>
-                        <Link to={`/edit/${id}`}>
-                          <button type="button" className="btn btn-secondary">
-                            Edit
+              : filteredItems.map(
+                  ({ name, email, phone, address, rating, id, index }) => {
+                    return (
+                      <tr key={index}>
+                        <th scope="row">{index + 1}</th>
+                        <td>{name}</td>
+                        <td>{email}</td>
+                        <td>{phone}</td>
+                        <td>{address}</td>
+                        <td>{rating}</td>
+                        <td>
+                          <Link to={`/edit/${id}`}>
+                            <button type="button" className="btn btn-secondary">
+                              Edit
+                            </button>
+                          </Link>
+                          <button
+                            type="button"
+                            className="btn btn-secondary"
+                            onClick={() => onDelete(name)}
+                          >
+                            Delete
                           </button>
-                        </Link>
-                        <button
-                          type="button"
-                          className="btn btn-secondary"
-                          onClick={() => onDelete(name)}
-                        >
-                          Delete
-                        </button>
-                        <Link to={`/view/${id}`}>
-                          <button type="button" className="btn btn-secondary">
-                            View
-                          </button>
-                        </Link>
-                      </td>
-                    </tr>
-                  );
-                })}
+                          <Link to={`/view/${id}`}>
+                            <button type="button" className="btn btn-secondary">
+                              View
+                            </button>
+                          </Link>
+                        </td>
+                      </tr>
+                    );
+                  }
+                )}
           </tbody>
         </Table>
       </div>

@@ -41,15 +41,24 @@ const Header = () => {
                 Home
               </p>
             </Link>
-      {user.role === "admin" && (<Link to="/add">
+            {user?.role === "admin" && (
+              <Link to="/add">
+                <p
+                  className={`${activeTab === "AddRestaurant" ? "active" : ""}`}
+                  onClick={() => setActiveTab("AddRestaurant")}
+                >
+                  Add Restaurant
+                </p>
+              </Link>
+            )}
+            <Link to="/view-bookings">
               <p
-                className={`${activeTab === "AddRestaurant" ? "active" : ""}`}
-                onClick={() => setActiveTab("AddRestaurant")}
+                className={`${activeTab === "ViewBookings" ? "active" : ""}`}
+                onClick={() => setActiveTab("ViewBookings")}
               >
-                Add Restaurant
+                View Bookings
               </p>
-            </Link>)}
-            
+            </Link>
           </div>
           <div className="header-right">
             <p>
