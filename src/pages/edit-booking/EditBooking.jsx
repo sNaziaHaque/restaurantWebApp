@@ -6,6 +6,11 @@ import { myDb } from "../../firebase";
 import "./EditBooking.css";
 
 const initialState = {
+  date: "",
+  time: "",
+  people: "",
+  resName: "",
+  resAddress: "",
   name: "",
   email: "",
   phone: "",
@@ -16,7 +21,17 @@ function EditBooking() {
   const [state, setState] = useState(initialState);
   const [data, setData] = useState({});
 
-  const { name, email, phone, bookingStatus } = state;
+  const {
+    date,
+    time,
+    people,
+    resName,
+    resAddress,
+    name,
+    email,
+    phone,
+    bookingStatus,
+  } = state;
 
   const navigate = useNavigate();
 
@@ -73,11 +88,89 @@ function EditBooking() {
   };
 
   return (
-    <div className="edit-booking-form shadow p-3 mb-5 bg-white rounded">
+    <div className="edit-booking-form">
       <form onSubmit={handleSubmit}>
         <h3>Edit Booking Details</h3>
         <hr />
         <br />
+        <div className="row mb-3">
+          <div className="col-md-6">
+            <div className="form-group">
+              <label className="form-label">Date</label>
+              <div className="form-field">
+                <i className="icon icon-calendar"></i>
+                <input
+                  type="date"
+                  name="date"
+                  id="date"
+                  className="form-control"
+                  value={date || ""}
+                  onChange={handleInputChange}
+                />
+              </div>
+            </div>
+          </div>
+          <div className="col-md-6">
+            <div className="form-group">
+              <label className="form-label">Time</label>
+              <div className="form-field">
+                <i className="icon icon-calendar"></i>
+                <input
+                  type="time"
+                  name="time"
+                  id="time"
+                  className="form-control"
+                  value={time || ""}
+                  onChange={handleInputChange}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="mb-3">
+          <div className="form-group">
+            <label className="form-label">How Many People</label>
+            <div className="form-field">
+              <i className="icon icon-chevron-down"></i>
+              <select
+                name="people"
+                id="people"
+                className="form-control"
+                onChange={handleInputChange}
+                value={people}
+              >
+                <option value="">Choose here</option>
+                <option value="1">1 people</option>
+                <option value="2">2 people</option>
+                <option value="3">3 people</option>
+                <option value="4">4+ people</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div className="mb-3">
+          <label className="form-label">Restaurant name</label>
+          <input
+            type="text"
+            className="form-control"
+            id="resName"
+            name="resName"
+            value={resName || ""}
+            onChange={handleInputChange}
+          />
+        </div>
+        <div className="mb-3">
+          <label className="form-label">Restaurant address</label>
+          <textarea
+            type="text"
+            className="form-control"
+            id="resAddress"
+            name="resAddress"
+            value={resAddress || ""}
+            onChange={handleInputChange}
+          />
+        </div>
         <div className="mb-3">
           <label className="form-label">Customer name</label>
           <input
