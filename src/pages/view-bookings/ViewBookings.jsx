@@ -18,35 +18,34 @@ function ViewBookings() {
   };
 
   useEffect(() => {
-    if (user?.role === "admin") {
-      myDb.child("bookings").on("value", (snapshot) => {
-        if (snapshot.val() !== null) {
-          setBookingData({ ...snapshot.val() });
-        } else {
-          setBookingData({});
-        }
-      });
-    } else {
-      // myDb
-      //   .child("bookings")
-      //   .equalTo(user?.email)
-      //   .on("value", (snapshot) => {
-      //     if (snapshot.val() !== null) {
-      //       setBookingData({ ...snapshot.val() });
-      //     } else {
-      //       setBookingData({});
-      //     }
-      //   });
+    if (user) {
+      if (user?.role === "admin") {
+        myDb.child("bookings").on("value", (snapshot) => {
+          if (snapshot.val() !== null) {
+            setBookingData({ ...snapshot.val() });
+          } else {
+            setBookingData({});
+          }
+        });
+      } else {
+        myDb
+          .child("bookings")
+          .orderByChild("resEmail")
+          .equalTo(user?.email)
+          .on("value", (snapshot) => {
+            if (snapshot.val() !== null) {
+              setBookingData({ ...snapshot.val() });
+            } else {
+              setBookingData({});
+            }
+          });
+      }
     }
 
     return () => {
       setBookingData({});
     };
-  }, []);
-
-  // useEffect(() => {
-  //   console.log("bookingData", bookingData);
-  // }, [bookingData]);
+  }, [user]);
 
   return (
     <div className="bookings-table">

@@ -82,7 +82,7 @@ const Header = () => {
                     }`}
                     onClick={() => setActiveTab("ViewBookings")}
                   >
-                    View Bookings
+                    View All Bookings
                   </p>
                 </Link>
               </>
