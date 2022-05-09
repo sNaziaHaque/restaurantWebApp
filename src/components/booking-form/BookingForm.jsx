@@ -22,8 +22,18 @@ function BookingForm(props) {
   const [showPaymentSuccess, setShowPaymentSuccess] = useState(false);
   const [bookingKey, setBookingKey] = useState("");
 
-  const { people, date, time, name, email, phone, resId, resName, resAddress } =
-    state;
+  const {
+    people,
+    date,
+    time,
+    name,
+    email,
+    phone,
+    resId,
+    resName,
+    resAddress,
+    resEmail,
+  } = state;
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -70,6 +80,7 @@ function BookingForm(props) {
       resId: props?.restaurantId,
       resName: props?.name,
       resAddress: props?.address,
+      resEmail: props?.email,
       bookingAmount: 0,
       paymentId: "",
       paymentStatus: "pending",
@@ -78,6 +89,10 @@ function BookingForm(props) {
 
     setState(initialState);
   }, [props]);
+
+  // useEffect(() => {
+  //   console.log("state", state);
+  // }, state);
 
   return (
     <div className="container shadow p-3 mb-5 bg-white rounded">

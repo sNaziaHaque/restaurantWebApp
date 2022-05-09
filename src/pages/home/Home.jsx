@@ -2,7 +2,10 @@ import React, { useState, useEffect, useContext } from "react";
 import { Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+
 import AuthContext from "../../context/AuthProvider";
+
+import ViewBookings from "../view-bookings/ViewBookings";
 
 import { myDb } from "../../firebase";
 
@@ -79,99 +82,117 @@ function Home() {
 
   return (
     <>
-      <div className="restaurant-search">
-        <form onSubmit={(e) => e.preventDefault()}>
-          <input
-            type="text"
-            className="searchInput"
-            placeholder="Search restaurant..."
-            onChange={(e) => handleSearch(e)}
-          />
-        </form>
-      </div>
+      {user?.role === "admin" ? (
+        <div>
+          <div className="restaurant-search">
+            <form onSubmit={(e) => e.preventDefault()}>
+              <input
+                type="text"
+                className="searchInput"
+                placeholder="Search restaurant..."
+                onChange={(e) => handleSearch(e)}
+              />
+            </form>
+          </div>
 
-      <div className="restaurant-table">
-        <Table striped bordered hover>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Restaurant Name</th>
-              <th>Email</th>
-              <th>Phone Number</th>
-              <th>Address</th>
-              <th>Rating</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {!searchValue
-              ? Object.keys(data).map((id, index) => {
-                  return (
-                    <tr key={index}>
-                      <th scope="row">{index + 1}</th>
-                      <td>{data[id].name}</td>
-                      <td>{data[id].email}</td>
-                      <td>{data[id].phone}</td>
-                      <td>{data[id].address}</td>
-                      <td>{data[id].rating}</td>
-                      <td>
-                        <Link to={`/edit/${id}`}>
-                          <button type="button" className="btn btn-secondary">
-                            Edit
-                          </button>
-                        </Link>
-                        <button
-                          type="button"
-                          className="btn btn-secondary"
-                          onClick={() => onDelete(id)}
-                        >
-                          Delete
-                        </button>
-                        <Link to={`/view-restaurant/${id}`}>
-                          <button type="button" className="btn btn-secondary">
-                            View
-                          </button>
-                        </Link>
-                      </td>
-                    </tr>
-                  );
-                })
-              : filteredItems.map(
-                  ({ name, email, phone, address, rating, id, index }) => {
-                    return (
-                      <tr key={index}>
-                        <th scope="row">{index + 1}</th>
-                        <td>{name}</td>
-                        <td>{email}</td>
-                        <td>{phone}</td>
-                        <td>{address}</td>
-                        <td>{rating}</td>
-                        <td>
-                          <Link to={`/edit/${id}`}>
-                            <button type="button" className="btn btn-secondary">
-                              Edit
+          <div className="restaurant-table">
+            <Table striped bordered hover>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Restaurant Name</th>
+                  <th>Email</th>
+                  <th>Phone Number</th>
+                  <th>Address</th>
+                  <th>Rating</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {!searchValue
+                  ? Object.keys(data).map((id, index) => {
+                      return (
+                        <tr key={index}>
+                          <th scope="row">{index + 1}</th>
+                          <td>{data[id].name}</td>
+                          <td>{data[id].email}</td>
+                          <td>{data[id].phone}</td>
+                          <td>{data[id].address}</td>
+                          <td>{data[id].rating}</td>
+                          <td>
+                            <Link to={`/edit/${id}`}>
+                              <button
+                                type="button"
+                                className="btn btn-secondary"
+                              >
+                                Edit
+                              </button>
+                            </Link>
+                            <button
+                              type="button"
+                              className="btn btn-secondary"
+                              onClick={() => onDelete(id)}
+                            >
+                              Delete
                             </button>
-                          </Link>
-                          <button
-                            type="button"
-                            className="btn btn-secondary"
-                            onClick={() => onDelete(name)}
-                          >
-                            Delete
-                          </button>
-                          <Link to={`/view/${id}`}>
-                            <button type="button" className="btn btn-secondary">
-                              View
-                            </button>
-                          </Link>
-                        </td>
-                      </tr>
-                    );
-                  }
-                )}
-          </tbody>
-        </Table>
-      </div>
+                            <Link to={`/view-restaurant/${id}`}>
+                              <button
+                                type="button"
+                                className="btn btn-secondary"
+                              >
+                                View
+                              </button>
+                            </Link>
+                          </td>
+                        </tr>
+                      );
+                    })
+                  : filteredItems.map(
+                      ({ name, email, phone, address, rating, id, index }) => {
+                        return (
+                          <tr key={index}>
+                            <th scope="row">{index + 1}</th>
+                            <td>{name}</td>
+                            <td>{email}</td>
+                            <td>{phone}</td>
+                            <td>{address}</td>
+                            <td>{rating}</td>
+                            <td>
+                              <Link to={`/edit/${id}`}>
+                                <button
+                                  type="button"
+                                  className="btn btn-secondary"
+                                >
+                                  Edit
+                                </button>
+                              </Link>
+                              <button
+                                type="button"
+                                className="btn btn-secondary"
+                                onClick={() => onDelete(name)}
+                              >
+                                Delete
+                              </button>
+                              <Link to={`/view/${id}`}>
+                                <button
+                                  type="button"
+                                  className="btn btn-secondary"
+                                >
+                                  View
+                                </button>
+                              </Link>
+                            </td>
+                          </tr>
+                        );
+                      }
+                    )}
+              </tbody>
+            </Table>
+          </div>
+        </div>
+      ) : (
+        <ViewBookings />
+      )}
     </>
   );
 }

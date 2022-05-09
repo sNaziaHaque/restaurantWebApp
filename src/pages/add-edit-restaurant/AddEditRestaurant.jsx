@@ -88,7 +88,7 @@ function AddEditRestaurant() {
   return (
     <div className="add-edit-form shadow p-3 mb-5 bg-white rounded">
       <form onSubmit={handleSubmit}>
-        <h3>Add a restaurant</h3>
+        <h3>{id ? "Edit restaurant" : "Add a restaurant"}</h3>
         <hr />
         <br />
         <div className="mb-3">

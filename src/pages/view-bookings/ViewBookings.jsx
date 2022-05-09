@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import AuthContext from "../../context/AuthProvider";
 import { myDb } from "../../firebase";
 
 import "./ViewBookings.css";
 
 function ViewBookings() {
+  const { user } = useContext(AuthContext);
+
   const [bookingData, setBookingData] = useState({});
 
   const truncate = (str, n) => {
@@ -15,22 +18,35 @@ function ViewBookings() {
   };
 
   useEffect(() => {
-    myDb.child("bookings").on("value", (snapshot) => {
-      if (snapshot.val() !== null) {
-        setBookingData({ ...snapshot.val() });
-      } else {
-        setBookingData({});
-      }
-    });
+    if (user?.role === "admin") {
+      myDb.child("bookings").on("value", (snapshot) => {
+        if (snapshot.val() !== null) {
+          setBookingData({ ...snapshot.val() });
+        } else {
+          setBookingData({});
+        }
+      });
+    } else {
+      // myDb
+      //   .child("bookings")
+      //   .equalTo(user?.email)
+      //   .on("value", (snapshot) => {
+      //     if (snapshot.val() !== null) {
+      //       setBookingData({ ...snapshot.val() });
+      //     } else {
+      //       setBookingData({});
+      //     }
+      //   });
+    }
 
     return () => {
       setBookingData({});
     };
   }, []);
 
-  useEffect(() => {
-    console.log("bookingData", bookingData);
-  }, [bookingData]);
+  // useEffect(() => {
+  //   console.log("bookingData", bookingData);
+  // }, [bookingData]);
 
   return (
     <div className="bookings-table">

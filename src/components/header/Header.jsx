@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import { signOut } from "firebase/auth";
 
-import { myAuth } from "../../firebase";
+import { myAuth, myDb } from "../../firebase";
 
 import AuthContext from "../../context/AuthProvider";
 
@@ -12,12 +12,34 @@ import "./Header.css";
 const Header = () => {
   const { setAuth, auth, user } = useContext(AuthContext);
 
+  const [restaurantKey, setRestaurantKey] = useState("");
+
   const userEmail = auth?.user?.user?.email;
   const navigate = useNavigate();
 
   const location = useLocation();
 
   const [activeTab, setActiveTab] = useState("Home");
+
+  useEffect(() => {
+    if (user) {
+      myDb
+        .child("restaurants")
+        .orderByChild("email")
+        .equalTo(user?.email)
+        .on("value", (snapshot) => {
+          if (snapshot.val() !== null) {
+            snapshot.forEach((childSnapshot) => {
+              var childKey = childSnapshot.key;
+              // var childData = childSnapshot.val();
+              setRestaurantKey(childKey);
+            });
+          } else {
+            setRestaurantKey("");
+          }
+        });
+    }
+  }, [user]);
 
   useEffect(() => {
     if (location.pathname === "/") {
@@ -41,24 +63,41 @@ const Header = () => {
                 Home
               </p>
             </Link>
-            {user?.role === "admin" && (
-              <Link to="/add">
+            {user?.role === "admin" ? (
+              <>
+                <Link to="/add">
+                  <p
+                    className={`${
+                      activeTab === "AddRestaurant" ? "active" : ""
+                    }`}
+                    onClick={() => setActiveTab("AddRestaurant")}
+                  >
+                    Add Restaurant
+                  </p>
+                </Link>
+                <Link to="/view-bookings">
+                  <p
+                    className={`${
+                      activeTab === "ViewBookings" ? "active" : ""
+                    }`}
+                    onClick={() => setActiveTab("ViewBookings")}
+                  >
+                    View Bookings
+                  </p>
+                </Link>
+              </>
+            ) : (
+              <Link to={`/edit/${restaurantKey}`}>
                 <p
-                  className={`${activeTab === "AddRestaurant" ? "active" : ""}`}
-                  onClick={() => setActiveTab("AddRestaurant")}
+                  className={`${
+                    activeTab === "EditRestaurant" ? "active" : ""
+                  }`}
+                  onClick={() => setActiveTab("EditRestaurant")}
                 >
-                  Add Restaurant
+                  Edit Restaurant
                 </p>
               </Link>
             )}
-            <Link to="/view-bookings">
-              <p
-                className={`${activeTab === "ViewBookings" ? "active" : ""}`}
-                onClick={() => setActiveTab("ViewBookings")}
-              >
-                View Bookings
-              </p>
-            </Link>
           </div>
           <div className="header-right">
             <p>
