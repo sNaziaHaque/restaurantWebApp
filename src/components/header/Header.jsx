@@ -19,7 +19,7 @@ const Header = () => {
 
   const location = useLocation();
 
-  const [activeTab, setActiveTab] = useState("Home");
+  const [activeTab, setActiveTab] = useState("");
 
   useEffect(() => {
     if (user) {
@@ -42,10 +42,16 @@ const Header = () => {
   }, [user]);
 
   useEffect(() => {
-    if (location.pathname === "/") {
+    if (location.pathname === "/" || location.pathname === "/home") {
       setActiveTab("Home");
     } else if (location.pathname === "/add") {
       setActiveTab("AddRestaurant");
+    } else if (location.pathname === "/view-bookings") {
+      setActiveTab("ViewBookings");
+    } else if (location.pathname.includes("/edit")) {
+      setActiveTab("EditRestaurant");
+    } else {
+      setActiveTab("");
     }
   }, [location]);
 
@@ -86,7 +92,7 @@ const Header = () => {
                   </p>
                 </Link>
               </>
-            ) : (
+            ) : user?.role === "manager" ? (
               <Link to={`/edit/${restaurantKey}`}>
                 <p
                   className={`${
@@ -97,7 +103,7 @@ const Header = () => {
                   Edit Restaurant
                 </p>
               </Link>
-            )}
+            ) : null}
           </div>
           <div className="header-right">
             <p>
@@ -107,6 +113,7 @@ const Header = () => {
               onClick={() => {
                 signOut(myAuth);
                 setAuth({});
+                localStorage.clear();
                 navigate("/login");
               }}
             >

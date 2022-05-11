@@ -38,10 +38,10 @@ function Login() {
     )
       .then((user) => {
         setAuth({ user });
-        // navigate(from, { replace: true });
 
         const docRef = doc(myFirestore, `users/${user?.user?.uid}`);
         setDoc(docRef, { email: email, role: role });
+
         navigate("/");
       })
       .catch((error) => {
@@ -65,7 +65,9 @@ function Login() {
           .then((user) => {
             // logged in
             setAuth({ user });
-            // navigate(from, { replace: true });
+            // store the user in localStorage
+            localStorage.setItem("user", JSON.stringify({ user }));
+
             navigate("/");
           })
           .catch((error) => {
