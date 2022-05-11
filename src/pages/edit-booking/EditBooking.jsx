@@ -88,7 +88,7 @@ function EditBooking() {
   };
 
   return (
-    <div className="edit-booking-form">
+    <div className="edit-booking-form shadow p-3 mb-5 bg-white rounded">
       <form onSubmit={handleSubmit}>
         <h3>Edit Booking Details</h3>
         <hr />
