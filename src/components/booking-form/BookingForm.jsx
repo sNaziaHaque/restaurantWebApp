@@ -183,7 +183,7 @@ function BookingForm(props) {
                       <div className="form-field">
                         <i className="icon icon-mail"></i>
                         <input
-                          type="text"
+                          type="email"
                           name="email"
                           id="email"
                           className="form-control"
@@ -253,7 +253,10 @@ function BookingForm(props) {
           </div>
         </div>
       ) : showPaymentSuccess ? (
-        <div>Payment successfully received!</div>
+        <div>
+          Payment successfully received! Please wait for confirmation from
+          restaurant.
+        </div>
       ) : null}
     </div>
   );
